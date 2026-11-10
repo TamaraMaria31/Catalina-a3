@@ -1,0 +1,82 @@
+@import "@fontsource/cormorant-garamond/latin-400.css";
+@import "@fontsource/cormorant-garamond/latin-500.css";
+@import "@fontsource/cormorant-garamond/latin-600.css";
+@import "@fontsource/dm-sans/latin-400.css";
+@import "@fontsource/dm-sans/latin-500.css";
+@import "@fontsource/dm-sans/latin-700.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    @apply bg-catalina-cream font-sans text-catalina-text antialiased;
+  }
+
+  /* Títulos usam a serifada; o restante do texto usa a sans. */
+  h1,
+  h2,
+  h3 {
+    @apply font-display font-medium tracking-[0.005em];
+  }
+
+  /* Foco visível para quem navega pelo teclado. */
+  :focus-visible {
+    outline: 2px solid #7c8f5b;
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Botão em caixinhas (LetterButton) */
+.letter-box {
+  position: relative;
+  display: flex;
+  height: 48px;
+  min-width: 32px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #4a5636;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  transition: background 0.8s;
+}
+.letter-box:first-child { padding-left: 6px; }
+.letter-box:last-child { padding-right: 6px; }
+.letter-box::before {
+  content: attr(data-hover);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #172312;
+  transition: transform 0.4s;
+}
+.letter-box[data-dir="up"]::before { transform: translateY(100%); }
+.letter-box[data-dir="down"]::before { transform: translateY(-100%); }
+.letter-btn:hover .letter-box::before,
+.letter-btn:focus-visible .letter-box::before { transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .letter-box, .letter-box::before { transition: none; }
+}
